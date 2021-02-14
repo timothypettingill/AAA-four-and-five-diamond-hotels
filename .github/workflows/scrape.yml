@@ -1,0 +1,27 @@
+name: Scrape latest AAA four and five diamond hotels
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Execute script
+        run: python aaa_four_and_five_diamond_hotels.py
+      - name: Commit and push new data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add aaa-four-and-five-diamond-hotels.json
+          timestamp=$(date -u --iso-8601=seconds)
+          git commit -m "Triggered Run: ${timestamp}" || exit 0
+          git push
