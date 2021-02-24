@@ -1,10 +1,9 @@
 name: Scrape latest AAA four and five diamond hotels
 
 on:
-  push:
   schedule:
     - cron: '0 0 1 * *'
-
+  workflow_dispatch:
 jobs:
   scheduled:
     runs-on: ubuntu-latest
